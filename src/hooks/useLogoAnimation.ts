@@ -12,16 +12,7 @@ export const useLogoAnimation = () => {
     const createRollingIcon = () => {
       const rollingIcon = document.createElement('div');
       rollingIcon.className = 'rolling-icon';
-      rollingIcon.innerHTML = `
-        <div class="w-10 h-10 bg-gradient-to-br from-white to-gray-300 rounded-xl flex items-center justify-center shadow-lg">
-          <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <circle cx="12" cy="5" r="2"></circle>
-            <path d="m12 7-3 3h6l-3-3z"></path>
-          </svg>
-        </div>
-      `;
-      
+
       // Position at logo location
       const logoIcon = document.getElementById('logo-icon');
       if (logoIcon) {
@@ -29,8 +20,20 @@ export const useLogoAnimation = () => {
         rollingIcon.style.position = 'fixed';
         rollingIcon.style.left = `${rect.left}px`;
         rollingIcon.style.top = `${rect.top}px`;
+        rollingIcon.style.width = `${rect.width}px`;
+        rollingIcon.style.height = `${rect.height}px`;
         rollingIcon.style.zIndex = '9999';
         rollingIcon.style.pointerEvents = 'none';
+
+        const clonedLogo = logoIcon.cloneNode(true) as HTMLElement;
+        clonedLogo.removeAttribute('id');
+        clonedLogo.style.pointerEvents = 'none';
+        clonedLogo.classList.remove('cursor-pointer', 'logo-scared');
+        if (!clonedLogo.classList.contains('logo-normal')) {
+          clonedLogo.classList.add('logo-normal');
+        }
+
+        rollingIcon.appendChild(clonedLogo);
       }
       
       document.body.appendChild(rollingIcon);
@@ -43,8 +46,10 @@ export const useLogoAnimation = () => {
       
       // Animate rolling across the page
       setTimeout(() => {
-        rollingIcon.style.transform = 'translateX(100vw) rotate(720deg)';
         rollingIcon.style.transition = 'transform 2s cubic-bezier(0.4, 0, 0.2, 1)';
+        // Force layout to ensure transition is applied before transform change
+        void rollingIcon.offsetWidth;
+        rollingIcon.style.transform = 'translateX(100vw) rotate(720deg)';
       }, 100);
 
       // Hide nav items and show dropdowns falling
@@ -74,9 +79,10 @@ export const useLogoAnimation = () => {
           const logoIcon = document.getElementById('logo-icon');
           if (logoIcon) {
             const rect = logoIcon.getBoundingClientRect();
+            returningIcon.style.transition = 'all 1s cubic-bezier(0.4, 0, 0.2, 1)';
+            void returningIcon.offsetWidth;
             returningIcon.style.left = `${rect.left}px`;
             returningIcon.style.transform = 'rotate(0deg)';
-            returningIcon.style.transition = 'all 1s cubic-bezier(0.4, 0, 0.2, 1)';
           }
         }, 100);
 

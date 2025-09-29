@@ -548,6 +548,18 @@ html {
   animation: none;
 }
 
+.rolling-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rolling-icon .logo-normal,
+.rolling-icon .logo-normal:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
 .logo-shake:hover {
   animation: logoShake 0.5s ease-in-out;
 }
