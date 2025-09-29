@@ -10,6 +10,7 @@ export const useLogoAnimation = () => {
 
     // Create rolling icon
     const createRollingIcon = () => {
+      document.querySelectorAll('.rolling-icon').forEach(icon => icon.remove());
       const rollingIcon = document.createElement('div');
       rollingIcon.className = 'rolling-icon';
 
@@ -52,12 +53,12 @@ export const useLogoAnimation = () => {
       const rollingIcon = createRollingIcon();
       
       // Animate rolling across the page
-      setTimeout(() => {
-        rollingIcon.style.transition = 'transform 2s cubic-bezier(0.4, 0, 0.2, 1)';
-        // Force layout to ensure transition is applied before transform change
-        void rollingIcon.offsetWidth;
-        rollingIcon.style.transform = 'translateX(100vw) rotate(720deg)';
-      }, 100);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          rollingIcon.style.transition = 'transform 2s cubic-bezier(0.4, 0, 0.2, 1)';
+          rollingIcon.style.transform = 'translateX(100vw) rotate(720deg)';
+        });
+      });
 
       // Hide nav items and show dropdowns falling
       const navItems = document.querySelectorAll('.nav-item');
@@ -79,19 +80,19 @@ export const useLogoAnimation = () => {
         
         // Create returning icon from left
         const returningIcon = createRollingIcon();
-        returningIcon.style.left = '-60px';
-        returningIcon.style.transform = 'rotate(-360deg)';
-        
-        setTimeout(() => {
+        returningIcon.style.left = `calc(-${returningIcon.style.width || '40px'} - 40px)`;
+        returningIcon.style.transform = 'translateX(0) rotate(-360deg)';
+
+        requestAnimationFrame(() => {
           const logoIcon = document.getElementById('logo-icon');
           if (logoIcon) {
             const rect = logoIcon.getBoundingClientRect();
-            returningIcon.style.transition = 'all 1s cubic-bezier(0.4, 0, 0.2, 1)';
-            void returningIcon.offsetWidth;
-            returningIcon.style.left = `${rect.left}px`;
-            returningIcon.style.transform = 'rotate(0deg)';
+            requestAnimationFrame(() => {
+              returningIcon.style.transition = 'transform 1.2s cubic-bezier(0.4, 0, 0.2, 1)';
+              returningIcon.style.transform = `translateX(${rect.left + rect.width / 2}px) rotate(0deg)`;
+            });
           }
-        }, 100);
+        });
 
         // Fade back nav items
         setTimeout(() => {
