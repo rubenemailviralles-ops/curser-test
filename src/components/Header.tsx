@@ -236,15 +236,16 @@ const Header = () => {
           </nav>
 
           <button
-            className="lg:hidden text-white"
+            className="lg:hidden text-white nav-item"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            data-nav-item="mobile-toggle"
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
         {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-white/10 mobile-menu-fade-in">
+          <div className="lg:hidden py-4 border-t border-white/10 mobile-menu-fade-in nav-item" data-nav-item="mobile-menu">
             <nav className="flex flex-col space-y-4">
               <Link 
                 to="/" 
@@ -252,17 +253,19 @@ const Header = () => {
                   handleHomeClick(e);
                   setIsMenuOpen(false);
                 }}
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-white transition-colors nav-item"
+                data-nav-item="mobile-home"
               >
                 Home
               </Link>
-              <div className="space-y-2">
-                <p className="text-white font-medium">Services</p>
+              <div className="space-y-2 nav-item" data-nav-item="mobile-services">
+                <p className="text-white font-medium nav-item" data-nav-item="mobile-services-label">Services</p>
                 {services.map((service) => (
                   <Link
                     key={service.path}
                     to={service.path}
-                    className="block pl-4 text-gray-400 hover:text-white transition-colors"
+                    className="block pl-4 text-gray-400 hover:text-white transition-colors nav-item"
+                    data-nav-item={`mobile-service-${service.path.replace('/', '')}`}
                     onClick={(e) => {
                       if (service.path === '/website-creation') handleWebsiteCreationClick(e);
                       if (service.path === '/crm-integration') handleCRMIntegrationClick(e);
@@ -277,7 +280,8 @@ const Header = () => {
               </div>
               <Link 
                 to="/about"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-white transition-colors nav-item"
+                data-nav-item="mobile-about"
                 onClick={(e) => {
                   handleAboutClick(e);
                   setIsMenuOpen(false);
@@ -287,7 +291,8 @@ const Header = () => {
               </Link>
               <Link 
                 to="/contact" 
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-white transition-colors nav-item"
+                data-nav-item="mobile-contact"
                 onClick={(e) => {
                   handleContactClick(e);
                   setIsMenuOpen(false);
@@ -297,7 +302,8 @@ const Header = () => {
               </Link>
               <Link 
                 to="/book-consultation"
-                className="bg-white text-black px-4 py-2 rounded-lg font-medium transition-colors"
+                className="bg-white text-black px-4 py-2 rounded-lg font-medium transition-colors nav-item"
+                data-nav-item="mobile-consultation"
                 onClick={(e) => {
                   handleBookConsultationClick(e);
                   setIsMenuOpen(false);
