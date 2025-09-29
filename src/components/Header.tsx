@@ -149,9 +149,10 @@ const Header = () => {
             <Link 
               to="/" 
               onClick={handleHomeClick}
-              className={`text-sm font-medium transition-all duration-300 hover-pop-text ${
+              className={`text-sm font-medium transition-all duration-300 hover-pop-text nav-item ${
                 location.pathname === '/' ? 'text-white' : 'text-gray-400 hover:text-white'
               }`}
+              data-nav-item="home"
             >
               Home
             </Link>
