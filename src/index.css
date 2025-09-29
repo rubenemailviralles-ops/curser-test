@@ -548,6 +548,12 @@ html {
   animation: none;
 }
 
+.logo-hidden {
+  opacity: 0 !important;
+  transform: translateY(-6px) !important;
+  pointer-events: none !important;
+}
+
 .rolling-icon {
   display: flex;
   align-items: center;

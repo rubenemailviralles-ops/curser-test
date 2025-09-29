@@ -27,8 +27,15 @@ export const useLogoAnimation = () => {
 
         const clonedLogo = logoIcon.cloneNode(true) as HTMLElement;
         clonedLogo.removeAttribute('id');
+        clonedLogo.removeAttribute('data-nav-item');
         clonedLogo.style.pointerEvents = 'none';
-        clonedLogo.classList.remove('cursor-pointer', 'logo-scared');
+        clonedLogo.classList.remove(
+          'cursor-pointer',
+          'logo-scared',
+          'logo-hidden',
+          'nav-item',
+          'nav-brand-icon'
+        );
         if (!clonedLogo.classList.contains('logo-normal')) {
           clonedLogo.classList.add('logo-normal');
         }
